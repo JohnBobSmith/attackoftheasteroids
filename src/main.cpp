@@ -109,6 +109,7 @@ int main()
     //Play music immediately
     audio.mainMenuTheme.play();
 
+	/*
     //Our bullet object, and Bullet pointers
     //Store our bullets in an std::vector
     //WE MUST REMEMBER TO CLEAN THIS UP
@@ -120,6 +121,9 @@ int main()
         bulletVector[i]->positionX = SCREEN_WIDTH / 2;
         bulletVector[i]->positionY = SCREEN_HEIGHT - player.getHeight();
     }
+    */
+    //Our bullet object
+    Bullet bullet;
 
     //Enemy object and pointers
     //CLEAN THIS UP
@@ -196,35 +200,8 @@ int main()
         if (ui.isPlaying) {
             //Mouse down event. Shoot with left mouse
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                //Our rate of fire. Subtract 0.01f here always.
-                //Do not change this value. Instead, adjust
-                //bullet.maxRateOfFire to change fire rate
-                bullet.rateOfFire -= 0.01f;
-
-                //Current bullet being shot.
-                //Used to shoot exactly one bullet at a time.
-                static int currentBullet = 0;
-
-                if (bullet.rateOfFire <= 0.0f) { //The our counter expired, so...
-                    //Fire our bullets one at a time
-                    currentBullet += 1;
-                    //If we run out of bullets, re-set to prevent a crash
-                    if (currentBullet >= bullet.getMaxBullets()) {
-                        currentBullet = 0;
-                    }
-                    //Allow for our bullet to be rendered, and set the trajectory
-                    //According to where the mouse was clicked.
-                    bulletVector[currentBullet]->isActive = true;
-                    bulletVector[currentBullet]->velocityX = bullet.bulletVelocity * (cos(mouseAngle * pi / 180));
-                    bulletVector[currentBullet]->velocityY = bullet.bulletVelocity * (sin(mouseAngle * pi / 180));
-
-                    //Play our firing sound
-                    audio.bulletFire.play();
-
-                    //Re-set the counter
-                    bullet.rateOfFire = bullet.maxRateOfFire;
-                }
-            }
+				//bullet.shoot();
+			}
 
             //Mouse right event. Fire our laser.
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
@@ -398,14 +375,13 @@ int main()
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
                 for (int j = 0; j < enemy.getMaxEnemies(); ++j) {
                     //Ensure our bullet is actually capable of damaging our enemies
-                    if (bulletVector[i]->isActive && !enemyVector[j]->isDead) {
-                        if (collisionbox.checkAABBcollision(bulletVector[i]->positionX, bulletVector[i]->positionY,
-                                                            bullet.getWidth(), bullet.getHeight(),
+                    if (bullet.bulletStorage[i]->isActive && !enemyVector[j]->isDead) {
+                        if (collisionbox.checkAABBcollision(bullet.bulletStorage[i]->positionX, bullet.bulletStorage[i]->positionY, 5, 5,
                                                             enemyVector[j]->positionX, enemyVector[j]->positionY,
                                                             enemy.getWidth(), enemy.getHeight())) {
                             //Collision detected.
-                            bulletVector[i]->isActive = false; //No longer rendered
-                            enemyVector[j]->applyDamage(bullet.bulletDamage);
+                            bullet.bulletStorage[i]->isActive = false; //No longer rendered
+                            enemyVector[j]->applyDamage(bullet.bulletStorage[i]->bulletDamage);
                             if (enemyVector[j]->isDead) {
                                 audio.enemyDeath.play();
                             }
@@ -416,18 +392,18 @@ int main()
 
             //If a bullet misses and goes off screen, kill it too
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
-                if (bulletVector[i]->positionY > SCREEN_HEIGHT || bulletVector[i]->positionY < 0) {
-                    bulletVector[i]->isActive = false;
+                if (bullet.bulletStorage[i]->positionY > SCREEN_HEIGHT || bullet.bulletStorage[i]->positionY < 0) {
+                    bullet.bulletStorage[i]->isActive = false;
                 }
             }
 
             //If the bullets are dead...
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
-                if (!bulletVector[i]->isActive) {
+                if (!bullet.bulletStorage[i]->isActive) {
                     //re-set their initial positions,
                     //so they can be used again
-                    bulletVector[i]->positionX = SCREEN_WIDTH / 2;
-                    bulletVector[i]->positionY = SCREEN_HEIGHT - player.getHeight();
+                    bullet.bulletStorage[i]->positionX = SCREEN_WIDTH / 2;
+                    bullet.bulletStorage[i]->positionY = SCREEN_HEIGHT - player.getHeight();
                 }
             }
 
@@ -542,11 +518,11 @@ int main()
 
             //Draw the bullets
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
-                if (bulletVector[i]->isActive) { //Live bullet, so move it
-                    bulletVector[i]->positionX += bulletVector[i]->velocityX * timeStep;
-                    bulletVector[i]->positionY += bulletVector[i]->velocityY * timeStep;
-                    bulletVector[i]->bulletSprite.setPosition(bulletVector[i]->positionX, bulletVector[i]->positionY);
-                    window.draw(bulletVector[i]->bulletSprite);
+                if (bullet.bulletStorage[i]->isActive) { //Live bullet, so move it
+                    bullet.bulletStorage[i]->positionX += bullet.bulletStorage[i]->velocityX * timeStep;
+                    bullet.bulletStorage[i]->positionY += bullet.bulletStorage[i]->velocityY * timeStep;
+                    bullet.bulletStorage[i]->bulletSprite.setPosition(bullet.bulletStorage[i]->positionX, bullet.bulletStorage[i]->positionY);
+                    window.draw(bullet.bulletStorage[i]->bulletSprite);
                 }
             }
 
@@ -578,7 +554,7 @@ int main()
             }
 
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
-                bulletVector[i]->isActive = false;
+                bullet.bulletStorage[i]->isActive = false;
             }
 
             //Ensure we are not in the main menu
@@ -640,11 +616,12 @@ int main()
     for (std::vector<Shield*>::iterator it = shieldVector.begin(); it != shieldVector.end(); it++){
         delete *it;
     }
-
+	/*
     std::cout << "Cleaning up bullets... Done\n";
     for (std::vector<Bullet*>::iterator it = bulletVector.begin(); it != bulletVector.end(); it++){
         delete *it;
     }
+    //*/
 
     std::cout << "Cleaning up enemies... Done\n";
     for (std::vector<Enemy*>::iterator it = enemyVector.begin(); it != enemyVector.end(); it++){

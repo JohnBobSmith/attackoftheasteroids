@@ -2,50 +2,62 @@
 #define BULLET_H
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include <memory>
 
 class Bullet
 {
     public:
-        //Set our textures up automatically
+    	struct BulletObj 
+    	{
+		    //Every bullet must have a sprite
+		    sf::Sprite bulletSprite;
+		    
+		    //Every bullet must have a texture
+		    sf::Texture bulletTexture;
+		    
+		    //Every bullet must have a bounding box
+		    sf::RectangleShape bbox;
+
+		    //The position of our bullet
+		    float positionX;
+		    float positionY;
+		 	
+		 	//The velocity of the bullet
+		 	float velocityX;
+		 	float velocityY;
+
+		    //do we render/interact with this bullet?
+		    bool isActive;
+
+		    //How fast are our bullets?
+		    float bulletVelocity;
+
+		    //Every bullet does damage
+		    int bulletDamage;
+
+		    //Cap our rate of fire
+		    //Change this to change the rate of fire
+		    float maxRateOfFire;
+
+		    //Our working rate of fire which 
+		    //we can do stuff to
+		    float rateOfFire;
+		};
+		
+        //Set our bullets up automatically
         Bullet();
-
-        //The sprite to be drawn
-        sf::Sprite bulletSprite;
-
-        //Velocities and positions
-        float velocityX = 0;
-        float velocityY = 0;
-        float positionX = 0;
-        float positionY = 0;
-
-        //do we render this bullet?
-        bool isActive = false;
-
-        //Bullets event bullet has a velocity
-        const float bulletVelocity = 75.0f;
-
-        //Every bullet does damage
-        const int bulletDamage = 12;
-
-        //Cap our rate of fire
-        //Change this to change the rate of fire
-        const float maxRateOfFire = 0.45;
-
-        //Our working rate of fire which we
-        //can do stuff to
-        float rateOfFire = maxRateOfFire;
-
-        //Self explanatory. Allow us to grab the texture/sprite width and height
-        int getWidth() { return bulletTexture.getSize().x; }
-        int getHeight() { return bulletTexture.getSize().y; }
+        
+        //Shoot a bullet
+        void shoot();
 
         //Expose the maximum amount of bullets allowed
         int getMaxBullets() { return maxBullets; };
+        
+        //Our bullet storage vector. 
+        std::vector<std::shared_ptr<BulletObj>> bulletStorage;
 
     private:
-        //Every bullet must have a texture
-        sf::Texture bulletTexture;
-
         //Give our for-loops a boundary, and
         //prevent an excessive amount of bullets
         //from accumulating. Not intended to be changed
