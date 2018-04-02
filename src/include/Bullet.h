@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
+#include "Mouse.h"
 
 class Bullet
 {
@@ -49,7 +50,7 @@ class Bullet
         Bullet();
         
         //Shoot a bullet
-        void shoot();
+        void shoot(Mouse &mouse);
 
         //Expose the maximum amount of bullets allowed
         int getMaxBullets() { return maxBullets; };

@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "include/Bullet.h"
 #include <iostream>
+#include <cmath>
 
 Bullet::Bullet()
 {
@@ -22,7 +23,7 @@ Bullet::Bullet()
    	}
 }
 
-void Bullet::shoot()
+void Bullet::shoot(Mouse &mouse)
 {
     //Current bullet being shot.
     //Used to shoot exactly one bullet at a time.
@@ -31,28 +32,28 @@ void Bullet::shoot()
     //Our rate of fire. Subtract 0.01f here always.
     //Do not change this value. Instead, adjust
     //bullet.maxRateOfFire to change fire rate
-    bullet.bulletStorage[currentBullet]->rateOfFire -= 0.01f;
+    bulletStorage[currentBullet]->rateOfFire -= 0.01f;
 
-    if (bullet.bulletStorage[currentBullet]->rateOfFire <= 0.0f) { //The our counter expired, so...
+    if (bulletStorage[currentBullet]->rateOfFire <= 0.0f) { //The our counter expired, so...
         //Fire our bullets one at a time
         currentBullet += 1;
         //If we run out of bullets, re-set to prevent a crash
-        if (currentBullet >= bullet.getMaxBullets()) {
+        if (currentBullet >= getMaxBullets()) {
             currentBullet = 0;
         }
         //Allow for our bullet to be rendered, and set the trajectory
         //According to where the mouse was clicked.
-        bullet.bulletStorage[currentBullet]->isActive = true;
-        bullet.bulletStorage[currentBullet]->velocityX = bullet.bulletStorage[currentBullet]->bulletVelocity * 
-        																		(cos(mouseAngle * pi / 180));
-        bullet.bulletStorage[currentBullet]->velocityY = bullet.bulletStorage[currentBullet]->bulletVelocity *
-        																		 (sin(mouseAngle * pi / 180));
+        bulletStorage[currentBullet]->isActive = true;
+        bulletStorage[currentBullet]->velocityX = bulletStorage[currentBullet]->bulletVelocity * 
+														(cos(mouse.getMouseAngle() * M_PI / 180));
+    	bulletStorage[currentBullet]->velocityY = bulletStorage[currentBullet]->bulletVelocity *
+														(sin(mouse.getMouseAngle() * M_PI / 180));
 
         //Play our firing sound
         //audio.bulletFire.play();
 
         //Re-set the counter
-        bullet.bulletStorage[currentBullet]->rateOfFire = bullet.bulletStorage[currentBullet]->maxRateOfFire;
+        bulletStorage[currentBullet]->rateOfFire = bulletStorage[currentBullet]->maxRateOfFire;
     
     }
 }
