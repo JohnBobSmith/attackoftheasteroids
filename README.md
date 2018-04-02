@@ -5,6 +5,11 @@ Welcome to AOTA! This is a 2D game that I'm currently working on on. I hope you 
 This game requires SFML >= 2.4 but may work work with older versions of sfml with varying success.
 This game requires a Linux based OS. Currently Arch Linux is the only tested OS but Ubuntu or Mint or Debian 
 or whatever should work too. Winows OS and Mac are unsupported but may work to some extent.
+Make is required to build the project.
+
+## Installation
+Download the repository. Cd into src/ where you should have a makefile. Make, then run the generated executable.
+I'm considering making a PKGBUILD for Arch Linux users, after I convert/patch/polish the source code first.
 
 ## Ingame Controls
 Left mouse: Shoot main cannon.
