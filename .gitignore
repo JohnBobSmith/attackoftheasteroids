@@ -37,3 +37,7 @@ src/obj/
 *.cbp
 *.depend
 *.layout
+
+# Our executable
+aota
+

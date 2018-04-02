@@ -1,6 +1,6 @@
 CXX = g++
 CXXFLAGS = -g -Wall
-PROG  = spaceyrocks
+PROG  = aota
 ODIR  = obj
 #SRC = $(wildcard *.cpp $(wildcard nope/*.cpp))
 SRC = $(wildcard *.cpp)
@@ -17,6 +17,6 @@ $(PROG): $(OBJS)
 	$(CXX) -o $(PROG) $^ $(LD)
 
 clean:
-	rm -f $(ODIR)/*.o spaceyrocks 
+	rm -f $(ODIR)/*.o $(PROG)
 	
 .PHONY: clean
