@@ -8,7 +8,7 @@ or whatever should work too. Winows OS and Mac are unsupported but may work to s
 Make is required to build the project.
 
 ## Installation
-Download the repository. Cd into src/ where you should have a makefile. Make, then run the generated executable.
+Download the repository. Cd into src/ where you should have a makefile. Make, then ./aota 
 I'm considering making a PKGBUILD for Arch Linux users, after I convert/patch/polish the source code first.
 
 ## Ingame Controls
