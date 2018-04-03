@@ -32,7 +32,7 @@ int main()
     //Our window and event union
     const int SCREEN_HEIGHT = 600;
     const int SCREEN_WIDTH = 800;
-    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Spacey Rocks");
+    sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Attack of the Asteroids");
     sf::Event event;
 
     //Our square font
@@ -139,6 +139,7 @@ int main()
                 //We pressed the titlebar's X button
                 window.close(); //Quit.
             }
+            //Update the mouse position
             mouse.update(event);
             //If we release right mouse, turn off laser
             if (event.type == sf::Event::MouseButtonReleased) {
@@ -464,10 +465,8 @@ int main()
                     enemyVector[i]->velocityY = enemyVector[i]->enemyVelocity + enemy.additionalEnemyVelocity;
                     enemyVector[i]->positionX += enemyVector[i]->velocityX * timeStep;
                     enemyVector[i]->positionY += enemyVector[i]->velocityY * timeStep;
-                    enemyVector[i]->easyAsteroid.setPosition(enemyVector[i]->positionX, enemyVector[i]->positionY);
-                    enemyVector[i]->mediumAsteroid.setPosition(enemyVector[i]->positionX, enemyVector[i]->positionY);
-                    window.draw(enemyVector[i]->easyAsteroid);
-                    window.draw(enemyVector[i]->mediumAsteroid);
+                    enemyVector[i]->asteroidSprite.setPosition(enemyVector[i]->positionX, enemyVector[i]->positionY);
+                    window.draw(enemyVector[i]->asteroidSprite);
                 }
             }
 
@@ -571,12 +570,6 @@ int main()
     for (std::vector<Shield*>::iterator it = shieldVector.begin(); it != shieldVector.end(); it++){
         delete *it;
     }
-	/*
-    std::cout << "Cleaning up bullets... Done\n";
-    for (std::vector<Bullet*>::iterator it = bulletVector.begin(); it != bulletVector.end(); it++){
-        delete *it;
-    }
-    //*/
 
     std::cout << "Cleaning up enemies... Done\n";
     for (std::vector<Enemy*>::iterator it = enemyVector.begin(); it != enemyVector.end(); it++){

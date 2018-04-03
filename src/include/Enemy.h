@@ -11,10 +11,8 @@ class Enemy
 
         //The enemy sprites to be
         //drawn on screen
-        sf::Sprite easyAsteroid;
-        sf::Sprite mediumAsteroid;
-        sf::Sprite hardAsteroid;
-
+        sf::Sprite asteroidSprite;
+        
         //The enemies position and velocity
         float velocityX = 0;
         float velocityY = 0;
@@ -53,8 +51,8 @@ class Enemy
         //Get the width and height of the enemy texture
         //This assumes all enemies are the same size as
         //our easyAsteroidTexture
-        int getWidth() { return easyAsteroidTexture.getSize().x; }
-        int getHeight() { return easyAsteroidTexture.getSize().y; }
+        int getWidth() { return asteroidTexture.getSize().x; }
+        int getHeight() { return asteroidTexture.getSize().y; }
 
         //Expose the max number of enemies,
         //for initialization, collision, drawing only!
@@ -77,9 +75,7 @@ class Enemy
 
     private:
         //The enemy textures
-        sf::Texture easyAsteroidTexture;
-        sf::Texture mediumAsteroidTexture;
-        sf::Texture hardAsteroidTexture;
+        sf::Texture asteroidTexture;
 
         //For initializing, collision, and
         //drawing purposes only! Required
