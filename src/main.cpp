@@ -139,7 +139,7 @@ int main()
                 //We pressed the titlebar's X button
                 window.close(); //Quit.
             }
-            mouse.update(event, window);
+            mouse.update(event);
             //If we release right mouse, turn off laser
             if (event.type == sf::Event::MouseButtonReleased) {
                 if (event.mouseButton.button == sf::Mouse::Right) {

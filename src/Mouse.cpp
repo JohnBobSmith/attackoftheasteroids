@@ -11,18 +11,19 @@ float Mouse::calculateMouseAngle(float mouseX, float mouseY, float positionX, fl
     return angle;
 }
 
-void Mouse::update(sf::Event &event, sf::Window &window) {
+void Mouse::update(sf::Event &event)
+{
+    //Calculate the mouse position every frame
     if (event.type == sf::Event::MouseMoved) {
-        //Calculate the mouse position every frame
-        mouseX = sf::Mouse::getPosition(window).x;
-        mouseY = sf::Mouse::getPosition(window).y;
+        mouseX = event.mouseMove.x;
+        mouseY = event.mouseMove.y;
     }
 }
 
 float Mouse::getMouseAngle()
 {
     //Set the angle relative to the player
-    mouseAngle = calculateMouseAngle(mouseX, mouseY, 600 / 2, 800 / 2 + 128);
+    mouseAngle = calculateMouseAngle(mouseX, mouseY, 800 / 2, 600 - 128);
 
     return mouseAngle;
 }
