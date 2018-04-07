@@ -99,18 +99,6 @@ int main()
         enemyVector.push_back(new Enemy());
     }
 
-	/*
-    //Shield object and pointers
-    //CLEAN THIS UP TOO!
-    Shield shield;
-    std::vector<Shield*> shieldVector;
-    for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
-        shieldVector.push_back(new Shield());
-        //Enable the shield
-        shieldVector[i]->isShieldUp = true;
-    }
-	//*/
-
     /* * * * MAIN LOOP * * * */
     while(window.isOpen()) {
         while(window.pollEvent(event)) {
@@ -543,13 +531,6 @@ int main()
         //of if we are playing the game or not
         window.display();
     } //End game loop
-
-	/*
-    std::cout << "Cleaning up shields... Done\n";
-    for (std::vector<Shield*>::iterator it = shieldVector.begin(); it != shieldVector.end(); it++){
-        delete *it;
-    }
-    //*/
 
     std::cout << "Cleaning up enemies... Done\n";
     for (std::vector<Enemy*>::iterator it = enemyVector.begin(); it != enemyVector.end(); it++){
