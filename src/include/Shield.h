@@ -2,41 +2,45 @@
 #define SHIELD_H
 
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include <vector>
 
 class Shield
 {
     public:
-        //Automatic textures
+    	struct ShieldObj
+    	{
+		    //Sprite and texture
+		    sf::Sprite shieldSprite;
+            sf::Texture shieldTexture;
+
+		    //Velocities and positions
+		    float velocityX;
+		    float velocityY;
+		    float positionX;
+		    float positionY;
+
+		    //Is an individual shield block running?
+		    bool isShieldUp;
+    	};
+    	
+        //Automaticaly setup our shield blocks
         Shield();
-
-        //Sprite
-        sf::Sprite shieldSprite;
-
-        //The shields energy on a per-block basis
-        float shieldEnergy = 100.0f;
-
-        //Velocities and positions
-        float velocityX = 0;
-        float velocityY = 0;
-        float positionX = 0;
-        float positionY = 0;
-
-        //Is an individual shield block running?
-        bool isShieldUp = false;
-
-        //Drain our shields on a per-block basis
-        void applyDamage(float damage);
-
-        //Grab the width and height of our sprite
-        int getWidth() { return shieldTexture.getSize().x; }
-        int getHeight() { return shieldTexture.getSize().y; }
+       
+       	//Calculate a quadradic equation used for 
+       	//making our shields curve uniformly 
+        sf::Vector2f calculateQuadratic(float n);
+        
+        //Position our shield blocks
+        void positionShieldBlocks();
 
         //Return the max amount of shield segments
         int getMaxShieldBlocks() { return maxShieldBlocks; }
+        
+        //Our shield vector storage
+        std::vector<std::shared_ptr<ShieldObj>> shieldVector;
 
     private:
-        sf::Texture shieldTexture;
-
         //Number of shield segments
         const int maxShieldBlocks = 60;
 };

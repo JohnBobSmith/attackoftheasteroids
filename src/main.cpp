@@ -13,17 +13,6 @@
 #include "include/Laser.h"
 #include "include/Mouse.h"
 
-//Calculate a quadratic equation
-sf::Vector2f calculateQuadratic(float n)
-{
-    sf::Vector2f tempVector;
-    float y = 370 + (2.2 * (std::pow(n, 2)) / 800);
-    float x = 390 + n;
-    tempVector.x = x;
-    tempVector.y = y;
-    return tempVector;
-}
-
 int main()
 {
     //Frame rate limiter
@@ -97,6 +86,10 @@ int main()
 
     //Our bullet object
     Bullet bullet;
+    
+    //Our shield object
+    Shield shield;
+    shield.positionShieldBlocks();
 
     //Enemy object and pointers
     //CLEAN THIS UP
@@ -106,6 +99,7 @@ int main()
         enemyVector.push_back(new Enemy());
     }
 
+	/*
     //Shield object and pointers
     //CLEAN THIS UP TOO!
     Shield shield;
@@ -115,22 +109,7 @@ int main()
         //Enable the shield
         shieldVector[i]->isShieldUp = true;
     }
-
-    //Position the shield blocks
-    static int counter = 0;
-    for (float i = -300; i <= 300; i += 10) {
-        float x = calculateQuadratic(i).x;
-        float y = calculateQuadratic(i).y;
-        shieldVector[counter]->positionX = x;
-        shieldVector[counter]->positionY = y;
-        shieldVector[counter]->shieldSprite.setPosition(shieldVector[counter]->positionX,
-                                                        shieldVector[counter]->positionY);
-        //Do not overflow, because that would crash our game
-        if (counter == shield.getMaxShieldBlocks() - 1) {
-            break;
-        }
-        counter += 1;
-    }
+	//*/
 
     /* * * * MAIN LOOP * * * */
     while(window.isOpen()) {
@@ -289,16 +268,15 @@ int main()
             for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
                 for (int j = 0; j < enemy.getMaxEnemies(); ++j) {
                     //Shield is up and enemy isnt dead
-                    if (shieldVector[i]->isShieldUp && !enemyVector[j]->isDead) {
-                        if (collisionbox.checkAABBcollision(shieldVector[i]->positionX, shieldVector[i]->positionY,
-                                                            shield.getWidth(), shield.getHeight(),
-                                                            enemyVector[j]->positionX, enemyVector[j]->positionY,
+                    if (shield.shieldVector[i]->isShieldUp && !enemyVector[j]->isDead) {
+                        if (collisionbox.checkAABBcollision(shield.shieldVector[i]->positionX, shield.shieldVector[i]->positionY,
+                                                            30, 30, enemyVector[j]->positionX, enemyVector[j]->positionY,
                                                             enemy.getWidth(), enemy.getHeight())) {
 
                             //Take out a shield chunk and damage the enemy,
                             //Thus allowing the enemy to take out more shield
                             //chunks, ultimately destroying our shield in a cool way.
-                            shieldVector[i]->applyDamage(999);
+                            shield.shieldVector[i]->isShieldUp = false;
                             enemyVector[j]->applyDamage(enemy.enemyHealth / 2);
                             if (enemyVector[j]->isDead) {
                                 audio.shieldImpact.play();
@@ -407,7 +385,7 @@ int main()
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     //Turn everything on...
                     for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
-                        shieldVector[i]->isShieldUp = true;
+                        shield.shieldVector[i]->isShieldUp = true;
                     }
 
                     //Reset enemy health
@@ -487,8 +465,8 @@ int main()
 
             //Draw our shield
             for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
-                if (shieldVector[i]->isShieldUp) {
-                    window.draw(shieldVector[i]->shieldSprite);
+                if (shield.shieldVector[i]->isShieldUp) {
+                    window.draw(shield.shieldVector[i]->shieldSprite);
                 }
             }
 
@@ -500,7 +478,7 @@ int main()
         } else { //ui.isPlaying is now FALSE
             //Kill everything because we are no longer playing
             for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
-                shieldVector[i]->isShieldUp = false;
+                shield.shieldVector[i]->isShieldUp = false;
             }
 
             for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
@@ -546,7 +524,7 @@ int main()
 
                         //Enable the shields
                         for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
-                            shieldVector[i]->isShieldUp = true;
+                            shield.shieldVector[i]->isShieldUp = true;
                         }
 
                         //Start playing again
@@ -566,10 +544,12 @@ int main()
         window.display();
     } //End game loop
 
+	/*
     std::cout << "Cleaning up shields... Done\n";
     for (std::vector<Shield*>::iterator it = shieldVector.begin(); it != shieldVector.end(); it++){
         delete *it;
     }
+    //*/
 
     std::cout << "Cleaning up enemies... Done\n";
     for (std::vector<Enemy*>::iterator it = enemyVector.begin(); it != enemyVector.end(); it++){
