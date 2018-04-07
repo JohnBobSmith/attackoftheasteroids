@@ -33,7 +33,7 @@ int main()
     gameOverText.setFont(blockFont);
     gameOverText.setString("Game Over");
     gameOverText.setCharacterSize(110);
-    gameOverText.setColor(sf::Color::Red);
+    gameOverText.setFillColor(sf::Color::Red);
     gameOverText.setStyle(sf::Text::Regular);
     //Center this text
     gameOverText.setPosition(SCREEN_WIDTH / 8, SCREEN_HEIGHT / 3);
@@ -43,7 +43,7 @@ int main()
     spaceTostartText.setFont(blockFont);
     spaceTostartText.setString("space bar to start");
     spaceTostartText.setCharacterSize(55);
-    spaceTostartText.setColor(sf::Color::Yellow);
+    spaceTostartText.setFillColor(sf::Color::Yellow);
     spaceTostartText.setStyle(sf::Text::Regular);
     //Position this text just below our win/loss text
     spaceTostartText.setPosition(SCREEN_WIDTH / 8, SCREEN_HEIGHT / 2);
@@ -53,7 +53,7 @@ int main()
     winText.setFont(blockFont);
     winText.setString("You WIN!!");
     winText.setCharacterSize(110);
-    winText.setColor(sf::Color::Green);
+    winText.setFillColor(sf::Color::Green);
     winText.setStyle(sf::Text::Regular);
     //Center our text
     winText.setPosition(SCREEN_WIDTH / 8, SCREEN_HEIGHT / 3);
