@@ -120,7 +120,7 @@ int main()
         if (ui.isPlaying) {
             //Mouse down event. Shoot with left mouse
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				bullet.shoot(mouse);
+				bullet.shoot(mouse, audio);
 			}
 
             //Mouse right event. Fire our laser.

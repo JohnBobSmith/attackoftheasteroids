@@ -23,7 +23,7 @@ Bullet::Bullet()
    	}
 }
 
-void Bullet::shoot(Mouse &mouse)
+void Bullet::shoot(Mouse &mouse, Audio &audio)
 {
     //Current bullet being shot.
     //Used to shoot exactly one bullet at a time.
@@ -50,7 +50,7 @@ void Bullet::shoot(Mouse &mouse)
 														(sin(mouse.getMouseAngle() * M_PI / 180));
 
         //Play our firing sound
-        //audio.bulletFire.play();
+        audio.bulletFire.play();
 
         //Re-set the counter
         bulletStorage[currentBullet]->rateOfFire = bulletStorage[currentBullet]->maxRateOfFire;

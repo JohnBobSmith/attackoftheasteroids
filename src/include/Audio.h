@@ -7,16 +7,7 @@
 class Audio
 {
     public:
-        /*
-            Sound names follow a very simple syntax so
-            I will always know what goes where. The rule is:
-              soundObject_stateThatSoundIsIn
-            without the underscore. For example, you have a bullet.
-            The bullet has to be fired, and hit something. These
-            two sounds are now named: bulletFire, bulletImpact.
-            For 2 impact sounds, bulletImpact01, bulletImpact02,
-            etc. All binary audio files follow this convention.
-        */
+
         //Initialize our sounds
         Audio();
 

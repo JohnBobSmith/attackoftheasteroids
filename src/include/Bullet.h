@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include "Mouse.h"
+#include "Audio.h"
 
 class Bullet
 {
@@ -50,7 +51,7 @@ class Bullet
         Bullet();
         
         //Shoot a bullet
-        void shoot(Mouse &mouse);
+        void shoot(Mouse &mouse, Audio &audio);
 
         //Expose the maximum amount of bullets allowed
         int getMaxBullets() { return maxBullets; };
