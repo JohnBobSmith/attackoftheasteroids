@@ -143,56 +143,55 @@ int main()
         //Running our actual game
         if (ui.isPlaying) {
             //Enemy wave spawning logic
-            for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
-		        if (!enemy.enemyVector[i]->isWaveSpawned) {
-		            //Spawn 1 wave at a time
-		            static int counter = 1;
-		            //Because our counter variable is not
-		            //A constant expression, we must use
-		            //if statements instead of case, or
-		            //we get a compiler error.
-		            if (counter == 1 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 1);
-		                counter += 1;
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		            if (counter == 2 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 2);
-		                counter += 1;
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		            if (counter == 3 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 3);
-		                counter += 1;
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		            if (counter == 4 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 4);
-		                counter += 1;
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		            if (counter == 5 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 5);
-		                counter += 1;
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		            if (counter == 6 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 6);
-		                counter += 1;
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		            if (counter == 7 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 7);
-		                counter += 1;
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		            if (counter == 8 && !enemy.enemyVector[i]->isWaveSpawned) {
-		                enemy.spawnEnemyWave(enemy.enemyVector, 8);
-		                counter = 8; //Do not add any more waves
-		                enemy.enemyVector[i]->isWaveSpawned = true;
-		            }
-		        }
-            }
+            if (!enemy.isWaveSpawned) {
+	            //Spawn 1 wave at a time
+	            static int counter = 1;
+	            //Because our counter variable is not
+	            //A constant expression, we must use
+	            //if statements instead of case, or
+	            //we get a compiler error.
+	            if (counter == 1 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 1);
+	                counter += 1;
+	                enemy.isWaveSpawned = true;
+	            }
+	            if (counter == 2 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 2);
+	                counter += 1;
+	                enemy.isWaveSpawned = true;
+	            }
+	            if (counter == 3 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 3);
+	                counter += 1;
+	                enemy.isWaveSpawned = true;
+	            }
+	            if (counter == 4 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 4);
+	                counter += 1;
+	                enemy.isWaveSpawned = true;
+	            }
+	            if (counter == 5 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 5);
+	                counter += 1;
+	                enemy.isWaveSpawned = true;
+	            }
+	            if (counter == 6 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 6);
+	                counter += 1;
+	                enemy.isWaveSpawned = true;
+	            }
+	            if (counter == 7 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 7);
+	                counter += 1;
+	                enemy.isWaveSpawned = true;
+	            }
+	            if (counter == 8 && !enemy.isWaveSpawned) {
+	                enemy.spawnEnemyWave(enemy.enemyVector, 8);
+	                counter = 8; //Do not add any more waves
+	                enemy.isWaveSpawned = true;
+	            }
+	        }
+        
             //Win checking
             //This is done right away, so that if this
             //returns false, checking for a loss still occurs
@@ -504,7 +503,7 @@ int main()
                     if (ui.isWin) {
                         //Spawn more enemies
                         for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
-                        	enemy.enemyVector[i]->isWaveSpawned = false;
+                        	enemy.isWaveSpawned = false;
                         }
 
                         //Reset the enemy parameters

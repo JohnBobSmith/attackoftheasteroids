@@ -4,7 +4,10 @@
 
 Enemy::Enemy()
 {
-	//Initialize all of our enemies
+	//Initialize variables
+	isWaveSpawned = false;
+
+	//Initialize all of our enemies	
 	for (int i = 0; i < maxEnemies; ++i) {
 		enemyVector.push_back(std::make_shared<EnemyObj>());
 		if (!enemyVector[i]->asteroidTexture.loadFromFile("../textures/easyAsteroid.png")) {
@@ -18,7 +21,6 @@ Enemy::Enemy()
 		enemyVector[i]->isDead = true;
 		enemyVector[i]->isSpawned = false;
 		enemyVector[i]->isCounted = false;
-		enemyVector[i]->isWaveSpawned = false;
 		enemyVector[i]->enemyVelocity = 5.0f;
 		enemyVector[i]->maxEnemyHealth = 40.0f;
 		enemyVector[i]->enemyHealth = enemyVector[i]->maxEnemyHealth;

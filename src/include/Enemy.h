@@ -29,10 +29,7 @@ class Enemy
 		    //Is the enemy counted,
 		    //in regards to win checking?
 		    bool isCounted;
-
-		    //Did we spawn a wave of enemies?
-		    bool isWaveSpawned;
-
+		    
 		    //Movement speed
 		    float enemyVelocity;
 
@@ -61,6 +58,9 @@ class Enemy
 
         //Reset and respawn our enemies
         void resetEnemy(std::vector<std::shared_ptr<EnemyObj>> tempEnemyVector);
+        
+	    //Did we spawn a wave of enemies?
+	    bool isWaveSpawned;
         
         //Store our enemies in an std::vector
         std::vector<std::shared_ptr<EnemyObj>> enemyVector;
