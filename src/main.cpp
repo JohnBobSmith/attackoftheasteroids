@@ -39,14 +39,14 @@ int main()
     gameOverText.setPosition(SCREEN_WIDTH / 8, SCREEN_HEIGHT / 3);
 
     //Our space to start text or prompt
-    sf::Text spaceTostartText;
-    spaceTostartText.setFont(blockFont);
-    spaceTostartText.setString("space bar to start");
-    spaceTostartText.setCharacterSize(55);
-    spaceTostartText.setFillColor(sf::Color::Yellow);
-    spaceTostartText.setStyle(sf::Text::Regular);
+    sf::Text spaceToStartText;
+    spaceToStartText.setFont(blockFont);
+    spaceToStartText.setString("space bar to start");
+    spaceToStartText.setCharacterSize(55);
+    spaceToStartText.setFillColor(sf::Color::Yellow);
+    spaceToStartText.setStyle(sf::Text::Regular);
     //Position this text just below our win/loss text
-    spaceTostartText.setPosition(SCREEN_WIDTH / 8, SCREEN_HEIGHT / 2);
+    spaceToStartText.setPosition(SCREEN_WIDTH / 8, SCREEN_HEIGHT / 2);
 
     //Our victory text
     sf::Text winText;
@@ -146,10 +146,6 @@ int main()
             if (!enemy.isWaveSpawned) {
 	            //Spawn 1 wave at a time
 	            static int counter = 1;
-	            //Because our counter variable is not
-	            //A constant expression, we must use
-	            //if statements instead of case, or
-	            //we get a compiler error.
 	            if (counter == 1 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 1);
 	                counter += 1;
@@ -468,31 +464,22 @@ int main()
             //Draw our player's health bar
             window.draw(player.healthBar);
         } else { //ui.isPlaying is now FALSE
-            //Kill everything because we are no longer playing
-            for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
-                shield.shieldVector[i]->isShieldUp = false;
-            }
-
-            for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
-                enemy.enemyVector[i]->isDead = true;
-            }
-
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
                 bullet.bulletStorage[i]->isActive = false;
             }
-
+			
             //Ensure we are not in the main menu
             if (!ui.isMainMenu) {
                 //If we won..
                 if (ui.isWin) {
                     //Game victory text and prompt
                     window.draw(winText);
-                    window.draw(spaceTostartText);
+                    window.draw(spaceToStartText);
                 } else { //We have lost
                     //Game over text and prompt
-                    spaceTostartText.setString("spacebar to quit");
+                    spaceToStartText.setString("spacebar to quit");
                     window.draw(gameOverText);
-                    window.draw(spaceTostartText);
+                    window.draw(spaceToStartText);
                     //Stop the music
                     audio.mainMenuTheme.stop();
                 }
@@ -516,10 +503,12 @@ int main()
                             enemy.enemyVector[i]->isDead = false;
                         }
 
+						/*
                         //Enable the shields
                         for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
                             shield.shieldVector[i]->isShieldUp = true;
                         }
+                        //*/
 
                         //Start playing again
                         ui.isPlaying = true;
