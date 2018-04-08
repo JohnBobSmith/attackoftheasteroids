@@ -4,28 +4,28 @@
 
 Enemy::Enemy()
 {
-    if (!asteroidTexture.loadFromFile("../textures/easyAsteroid.png")) {
-        std::cout << "Error: Missing enemy texture";
-    }
-    asteroidSprite.setTexture(asteroidTexture);
-
+	//Initialize all of our enemies
+	for (int i = 0; i < maxEnemies; ++i) {
+		enemyVector.push_back(std::make_shared<EnemyObj>());
+		if (!enemyVector[i]->asteroidTexture.loadFromFile("../textures/easyAsteroid.png")) {
+		    std::cerr << "Error: Missing enemy texture ../textures/easyAsteroid.png";
+		}
+		enemyVector[i]->asteroidSprite.setTexture(enemyVector[i]->asteroidTexture);
+		enemyVector[i]->velocityX = 0;
+		enemyVector[i]->velocityY = 0;
+		enemyVector[i]->positionX = 0;
+		enemyVector[i]->positionY = 0;
+		enemyVector[i]->isDead = true;
+		enemyVector[i]->isSpawned = false;
+		enemyVector[i]->isCounted = false;
+		enemyVector[i]->isWaveSpawned = false;
+		enemyVector[i]->enemyVelocity = 5.0f;
+		enemyVector[i]->maxEnemyHealth = 40.0f;
+		enemyVector[i]->enemyHealth = enemyVector[i]->maxEnemyHealth;
+	}
 }
 
-void Enemy::applyDamage(float damage)
-{
-    //If they have even a smidgen of health
-    if (enemyHealth >= 0.0f) {
-        //Subtract the damage from the health
-        enemyHealth -= damage;
-    }
-
-    //If the enemy died...
-    if (enemyHealth <= 0.0f) {
-        isDead = true; //Kill it.
-    }
-}
-
-bool Enemy::checkForWin(std::vector<Enemy*> tempEnemyVector, int enemyCount)
+bool Enemy::checkForWin(std::vector<std::shared_ptr<EnemyObj>> tempEnemyVector, int enemyCount)
 {
     //Check for a win, where a win is defined as:
     //1) The enemy is not in play (dead)
@@ -78,7 +78,7 @@ bool Enemy::checkForWin(std::vector<Enemy*> tempEnemyVector, int enemyCount)
 }
 
 //Reset the asteroids positions, WIP wave-based system
-void Enemy::resetEnemy(std::vector<Enemy*> tempEnemyVector)
+void Enemy::resetEnemy(std::vector<std::shared_ptr<EnemyObj>> tempEnemyVector)
 {
     //Position our enemies on the X axis
     for (int i = 0; i < localEnemyCount; ++i) {
@@ -121,11 +121,10 @@ void Enemy::resetEnemy(std::vector<Enemy*> tempEnemyVector)
             ammountToMove = -800;
         }
         tempEnemyVector[i]->positionY = ammountToMove;
-        std::cout << "i = " << i << " Y = " << tempEnemyVector[i]->positionY << "\n";
     }
 }
 
-void Enemy::spawnEnemyWave(std::vector<Enemy*> tempEnemyVector, int waveNumber)
+void Enemy::spawnEnemyWave(std::vector<std::shared_ptr<EnemyObj>> tempEnemyVector, int waveNumber)
 {
     //Count our waves and add enemies accordingly
     switch (waveNumber)
@@ -156,11 +155,6 @@ void Enemy::spawnEnemyWave(std::vector<Enemy*> tempEnemyVector, int waveNumber)
         localEnemyCount = 63;
         break;
     case 8:
-        //After the last wave, slowly increase
-        //The speed of all enemies until the player
-        //loses or gains the world record for waves
-        //successfully completed.
-        additionalEnemyVelocity += 1;
         localEnemyCount = maxEnemies;
         break;
     default:
@@ -174,8 +168,7 @@ void Enemy::spawnEnemyWave(std::vector<Enemy*> tempEnemyVector, int waveNumber)
         tempEnemyVector[i]->isSpawned = true;
     }
 
-    //position them
+    //Position them
     resetEnemy(tempEnemyVector);
-
-    std::cout << "WAVE NUMBER: " << waveNumber << "\n";
 }
+
