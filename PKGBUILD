@@ -1,6 +1,6 @@
 # Maintainer: David "JohnBobSmith" Bogner <myrunescapeemail609 AT gmail DOT com>
 pkgname=attackoftheasteroids
-pkgver=r10.4bed830
+pkgver=r22.c066496
 pkgrel=1
 pkgdesc="A.O.T.A - A simple 2D shooting and defense game."
 arch=(x86_64)
@@ -22,6 +22,7 @@ build() {
 
 package() {
 	cd "$pkgname"
-	install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+	install -D -m644 License.md "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 	install -D -m755 "src/aota" "${pkgdir}/usr/bin/aota"
+	install -D -m755 "textures/bg.png" "${pkgdir}/usr/share/${pkgname}/textures/bg.png"
 }
