@@ -61,6 +61,9 @@ class Enemy
         
 	    //Did we spawn a wave of enemies?
 	    bool isWaveSpawned;
+	    
+	    //Keep track of which wave we are on
+	    int waveCounter;
         
         //Store our enemies in an std::vector
         std::vector<std::shared_ptr<EnemyObj>> enemyVector;

@@ -6,6 +6,7 @@ Enemy::Enemy()
 {
 	//Initialize variables
 	isWaveSpawned = false;
+	waveCounter = 1;
 
 	//Initialize all of our enemies	
 	for (int i = 0; i < maxEnemies; ++i) {

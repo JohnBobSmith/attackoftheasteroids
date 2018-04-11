@@ -111,11 +111,6 @@ int main()
             }
         } //End event loop
 
-        //Return to the main menu at any time when we press escape.
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            ui.isMainMenu = true;
-        }
-
         //Process these events only if we are playing
         if (ui.isPlaying) {
             //Mouse down event. Shoot with left mouse
@@ -145,45 +140,44 @@ int main()
             //Enemy wave spawning logic
             if (!enemy.isWaveSpawned) {
 	            //Spawn 1 wave at a time
-	            static int counter = 1;
-	            if (counter == 1 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 1 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 1);
-	                counter += 1;
+	                enemy.waveCounter += 1;
 	                enemy.isWaveSpawned = true;
 	            }
-	            if (counter == 2 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 2 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 2);
-	                counter += 1;
+	                enemy.waveCounter += 1;
 	                enemy.isWaveSpawned = true;
 	            }
-	            if (counter == 3 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 3 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 3);
-	                counter += 1;
+	                enemy.waveCounter += 1;
 	                enemy.isWaveSpawned = true;
 	            }
-	            if (counter == 4 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 4 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 4);
-	                counter += 1;
+	                enemy.waveCounter += 1;
 	                enemy.isWaveSpawned = true;
 	            }
-	            if (counter == 5 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 5 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 5);
-	                counter += 1;
+	                enemy.waveCounter += 1;
 	                enemy.isWaveSpawned = true;
 	            }
-	            if (counter == 6 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 6 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 6);
-	                counter += 1;
+	                enemy.waveCounter += 1;
 	                enemy.isWaveSpawned = true;
 	            }
-	            if (counter == 7 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 7 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 7);
-	                counter += 1;
+	                enemy.waveCounter += 1;
 	                enemy.isWaveSpawned = true;
 	            }
-	            if (counter == 8 && !enemy.isWaveSpawned) {
+	            if (enemy.waveCounter == 8 && !enemy.isWaveSpawned) {
 	                enemy.spawnEnemyWave(enemy.enemyVector, 8);
-	                counter = 8; //Do not add any more waves
+	                enemy.waveCounter = 8; //Do not add any more waves
 	                enemy.isWaveSpawned = true;
 	            }
 	        }
@@ -501,14 +495,7 @@ int main()
                         //only reset enemies that need re-setting
                         for (int i = 0; i < enemy.getLocalEnemyCount(); ++i) {
                             enemy.enemyVector[i]->isDead = false;
-                        }
-
-						/*
-                        //Enable the shields
-                        for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
-                            shield.shieldVector[i]->isShieldUp = true;
-                        }
-                        //*/
+                       }
 
                         //Start playing again
                         ui.isPlaying = true;
