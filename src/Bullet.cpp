@@ -7,7 +7,7 @@ Bullet::Bullet()
 {
 	for (int i = 0; i < maxBullets; ++i) {
         bulletStorage.push_back(std::make_shared<BulletObj>());
-        if (!bulletStorage[i]->bulletTexture.loadFromFile("../textures/bullet.png")) {
+        if (!bulletStorage[i]->bulletTexture.loadFromFile("/usr/share/attackoftheasteroids/textures/bullet.png")) {
         	std::cerr << "Warning: Missing texture file ../textures/bullet.png\n";
         }
         bulletStorage[i]->bulletSprite.setTexture(bulletStorage[i]->bulletTexture);

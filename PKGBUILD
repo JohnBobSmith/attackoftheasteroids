@@ -1,6 +1,6 @@
 # Maintainer: David "JohnBobSmith" Bogner <myrunescapeemail609 AT gmail DOT com>
 pkgname=attackoftheasteroids
-pkgver=r22.c066496
+pkgver=r23.1f26b22
 pkgrel=1
 pkgdesc="A.O.T.A - A simple 2D shooting and defense game."
 arch=(x86_64)

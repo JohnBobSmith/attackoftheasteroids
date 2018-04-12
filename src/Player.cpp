@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-    if(!playerTexture.loadFromFile("../textures/moonbase.png")) {
+    if(!playerTexture.loadFromFile("/usr/share/attackoftheasteroids/textures/moonbase.png")) {
         std::cout << "Error: Missing ../textures/moonbase.png!";
     }
     playerSprite.setTexture(playerTexture);

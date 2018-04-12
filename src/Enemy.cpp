@@ -11,7 +11,7 @@ Enemy::Enemy()
 	//Initialize all of our enemies	
 	for (int i = 0; i < maxEnemies; ++i) {
 		enemyVector.push_back(std::make_shared<EnemyObj>());
-		if (!enemyVector[i]->asteroidTexture.loadFromFile("../textures/easyAsteroid.png")) {
+		if (!enemyVector[i]->asteroidTexture.loadFromFile("/usr/share/attackoftheasteroids/textures/easyAsteroid.png")) {
 		    std::cerr << "Error: Missing enemy texture ../textures/easyAsteroid.png";
 		}
 		enemyVector[i]->asteroidSprite.setTexture(enemyVector[i]->asteroidTexture);

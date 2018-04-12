@@ -3,18 +3,18 @@
 
 Audio::Audio()
 {
-    bulletFireBuffer.loadFromFile("../audio/sfx/bulletFire.wav");
+    bulletFireBuffer.loadFromFile("/usr/share/attackoftheasteroids/audio/sfx/bulletFire.wav");
     bulletFire.setBuffer(bulletFireBuffer);
 
-    shieldImpactBuffer.loadFromFile("../audio/sfx/shieldImpact.wav");
+    shieldImpactBuffer.loadFromFile("/usr/share/attackoftheasteroids/audio/sfx/shieldImpact.wav");
     shieldImpact.setBuffer(shieldImpactBuffer);
 
-    laserFireBuffer.loadFromFile("../audio/sfx/laserFire.wav");
+    laserFireBuffer.loadFromFile("/usr/share/attackoftheasteroids/audio/sfx/laserFire.wav");
     laserFire.setBuffer(laserFireBuffer);
 
-    enemyDeathBuffer.loadFromFile("../audio/sfx/enemyDeath.wav");
+    enemyDeathBuffer.loadFromFile("/usr/share/attackoftheasteroids/audio/sfx/enemyDeath.wav");
     enemyDeath.setBuffer(enemyDeathBuffer);
 
-    mainMenuTheme.openFromFile("../audio/music/mainMenuTheme.wav");
+    mainMenuTheme.openFromFile("/usr/share/attackoftheasteroids/audio/music/mainMenuTheme.wav");
     mainMenuTheme.setLoop(true);
 }
