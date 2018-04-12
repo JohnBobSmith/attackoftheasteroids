@@ -8,8 +8,15 @@ or whatever should work too. Winows OS and Mac are unsupported but may work to s
 Make is required to build the project.
 
 ## Installation
-Download the repository. Cd into src/ where you should have a makefile. Make, then ./aota 
-I'm considering making a PKGBUILD for Arch Linux users, after I convert/patch/polish the source code first.
+For Arch Linux, use the provided PKGBUILD. To run a copy locally, edit the cpp files and replace 
+/usr/share/attackoftheasteroids 
+with ../ so for example: 
+blockFont.loadFromFile("/usr/share/attackoftheasteroids/fonts/ehsmb.ttf");
+becomes
+blockFont.loadFromFile("../fonts/ehsmb.ttf");
+repeat for each .loadFromFile() that needs changing. 
+Then, cd src/; make; ./aota
+### I am planning on making some sort of configuration script/code soon to make this easier or even automate the process.
 
 ## Ingame Controls
 Left mouse: Shoot main cannon.
