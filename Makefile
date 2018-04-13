@@ -38,7 +38,7 @@ install:
 	#install -Dm644 "textures/ui/quit.png" "$(DESTDIR)/usr/share/$(PROG)/textures/ui/quit.png"
 	#install -Dm644 "textures/ui/helppage.png" "$(DESTDIR)/usr/share/$(PROG)/textures/ui/helppage.png"
 	install -Dm644 "fonts/ehsmb.ttf" "$(DESTDIR)/usr/share/$(PROG)/fonts/ehsmb.ttf"
-	install -Dm644 -t "$(DESTDIR)/usr/share/$(PROG)/audio/sfx/" audio/*.wav
+	install -Dm644 -t "$(DESTDIR)/usr/share/$(PROG)/audio/sfx/" audio/sfx/*.wav
 	#install -Dm644 "audio/sfx/bulletFire.wav" "$(DESTDIR)/usr/share/$(PROG)/audio/sfx/bulletFire.wav"
 	#install -Dm644 "audio/sfx/enemyDeath.wav" "$(DESTDIR)/usr/share/$(PROG)/audio/sfx/enemyDeath.wav"
 	#install -Dm644 "audio/sfx/laserFire.wav" "$(DESTDIR)/usr/share/$(PROG)/audio/sfx/laserFire.wav"
