@@ -23,7 +23,7 @@ clean:
 
 install:
 	install -Dm644 License.md "$(DESTDIR)/usr/share/licenses/$(PROG)/LICENSE"
-	install -Dm755 attackoftheasteroids "$(DESTDIR)/usr/bin/aota"
+	install -Dm755 attackoftheasteroids "$(DESTDIR)/usr/bin/attackoftheasteroids"
 	#install -Dm644 -t "$(DESTDIR)/usr/share/$(PROG)/textures" textures/*
 	install -Dm644 "textures/bg.png" "$(DESTDIR)/usr/share/$(PROG)/textures/bg.png"
 	install -Dm644 "textures/bullet.png" "$(DESTDIR)/usr/share/$(PROG)/textures/bullet.png"
