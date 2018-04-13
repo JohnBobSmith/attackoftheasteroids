@@ -1,9 +1,9 @@
 # Maintainer: David "JohnBobSmith" Bogner <myrunescapeemail609 AT gmail DOT com>
 pkgname=attackoftheasteroids-git
-__pkgname=attackoftheasteroids
-pkgver=r28.74b901f
+_pkgname=attackoftheasteroids
+pkgver=r30.94e29a2
 pkgrel=1
-pkgdesc="A.O.T.A - A simple 2D shooting and defense game."
+pkgdesc="A simple 2D shooting and defense game."
 arch=(x86_64)
 depends=('sfml')
 makedepends=('git')
@@ -18,7 +18,7 @@ pkgver() {
 }
 
 build() {
-	cd "$_pkgname/"
+	cd "$_pkgname"
 	make
 }
 
