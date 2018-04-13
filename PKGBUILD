@@ -26,3 +26,5 @@ package() {
 	cd "$_pkgname"
 	make DESTDIR="$pkgdir/" install
 }
+
+
