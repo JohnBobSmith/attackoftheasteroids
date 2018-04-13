@@ -18,7 +18,7 @@ pkgver() {
 }
 
 build() {
-	cd "$_pkgname/src/"
+	cd "$_pkgname/"
 	make
 }
 
