@@ -23,7 +23,7 @@ clean:
 
 install:
 	install -Dm644 License.md "$(DESTDIR)/usr/share/licenses/$(PROG)/LICENSE"
-	install -Dm755 "aota" "$(DESTDIR)/usr/bin/aota"
+	install -Dm755 aota "$(DESTDIR)/usr/bin/aota"
 	install -Dm644 -t "$(DESTDIR)/usr/share/$(PROG)/textures" textures/*
 	#install -Dm644 "textures/bg.png" "${pkgdir}/usr/share/${_pkgname}/textures/bg.png"
 	#install -Dm644 "textures/bullet.png" "${pkgdir}/usr/share/${_pkgname}/textures/bullet.png"
