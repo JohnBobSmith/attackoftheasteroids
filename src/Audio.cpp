@@ -19,7 +19,7 @@ Audio::Audio()
     }
     laserFire.setBuffer(laserFireBuffer);
 
-	if !(enemyDeathBuffer.loadFromFile(PREFIX "/share/attackoftheasteroids/audio/sfx/enemyDeath.wav")) {
+	if (!enemyDeathBuffer.loadFromFile(PREFIX "/share/attackoftheasteroids/audio/sfx/enemyDeath.wav")) {
 		std::cerr << "Warning: Missing audio file enemyDeath.wav\n";
 	}
     enemyDeath.setBuffer(enemyDeathBuffer);

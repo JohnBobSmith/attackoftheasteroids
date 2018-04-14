@@ -26,8 +26,8 @@ int main()
 
     //Our square font
     sf::Font blockFont;
-    if (!blockFont.loadFromFile(PREFIX "/share/attackoftheasteroids/fonts/ehsmb.ttf") {
-    	std::cerr << "Warning: Missing font ehsmb.ttf\n"
+    if (!blockFont.loadFromFile(PREFIX "/share/attackoftheasteroids/fonts/ehsmb.ttf")) {
+    	std::cerr << "Warning: Missing font ehsmb.ttf\n";
     }
 
     //Our game over text
@@ -63,7 +63,7 @@ int main()
     //Our background image
     sf::Sprite background;
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/bg.png") {
+    if (!backgroundTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/bg.png")) {
     	std::cerr << "Warning: Missing texture file bg.png\n";
     }
     background.setTexture(backgroundTexture);
