@@ -8,7 +8,7 @@ Shield::Shield()
 	for (int i = 0; i < maxShieldBlocks; ++i) {
 		shieldVector.push_back(std::make_shared<ShieldObj>());
 		if (!shieldVector[i]->shieldTexture.loadFromFile("/usr/share/attackoftheasteroids/textures/shield.png")) {
-			std::cerr << "Error, missing shield texture shield.png\n";
+			std::cerr << "Warning: Missing texture file shield.png\n";
 		}
     	shieldVector[i]->shieldSprite.setTexture(shieldVector[i]->shieldTexture);
     	shieldVector[i]->velocityX = 0;

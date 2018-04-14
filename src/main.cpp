@@ -26,7 +26,9 @@ int main()
 
     //Our square font
     sf::Font blockFont;
-    blockFont.loadFromFile(PREFIX "/share/attackoftheasteroids/fonts/ehsmb.ttf");
+    if (!blockFont.loadFromFile(PREFIX "/share/attackoftheasteroids/fonts/ehsmb.ttf") {
+    	std::cerr << "Warning: Missing font ehsmb.ttf\n"
+    }
 
     //Our game over text
     sf::Text gameOverText;
@@ -61,7 +63,9 @@ int main()
     //Our background image
     sf::Sprite background;
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/bg.png");
+    if (!backgroundTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/bg.png") {
+    	std::cerr << "Warning: Missing texture file bg.png\n";
+    }
     background.setTexture(backgroundTexture);
 
     //The laser

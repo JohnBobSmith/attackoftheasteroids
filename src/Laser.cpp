@@ -4,7 +4,7 @@
 Laser::Laser()
 {
     if (!laserTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/laser.png")) {
-        std::cerr << "Error: Missing texture laser.png";
+        std::cerr << "Error: Missing texture file laser.png\n";
     }
     laserSprite.setTexture(laserTexture);
     //Position the laser at the bottom, because it shoots
