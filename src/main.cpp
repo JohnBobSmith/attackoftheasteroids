@@ -26,7 +26,7 @@ int main()
 
     //Our square font
     sf::Font blockFont;
-    blockFont.loadFromFile("/usr/share/attackoftheasteroids/fonts/ehsmb.ttf");
+    blockFont.loadFromFile(PREFIX "/share/attackoftheasteroids/fonts/ehsmb.ttf");
 
     //Our game over text
     sf::Text gameOverText;
@@ -61,7 +61,7 @@ int main()
     //Our background image
     sf::Sprite background;
     sf::Texture backgroundTexture;
-    backgroundTexture.loadFromFile("/usr/share/attackoftheasteroids/textures/bg.png");
+    backgroundTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/bg.png");
     background.setTexture(backgroundTexture);
 
     //The laser
