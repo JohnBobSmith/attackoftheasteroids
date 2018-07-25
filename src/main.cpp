@@ -101,6 +101,7 @@ int main()
 	
     /* * * * MAIN LOOP * * * */
     while(window.isOpen()) {
+        //Keep track of delta time
         sf::Time deltaTime = deltaClock.restart();
         while(window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
@@ -124,7 +125,7 @@ int main()
 				bullet.shoot(mouse, audio);
 			}
 
-            //Mouse right event. Fire our laser.
+            //Mouse right event. Fire our laser
             if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
                 laser.isLaserOn = true;
             }
@@ -207,12 +208,12 @@ int main()
                     laser.tickTimer = laser.tickTimerInitial;
                 }
             }
-            
-            std::cout << player.playerHealth << "\n";
 
             //Check the status of our health bar
-            //Starts off as green by default, we
-            //don't need to check that here.
+            //Allow the health bar to decrease in size over time
+            player.healthBar.setRotation(180);
+            player.healthBar.setScale(1.5, 0.1 + player.playerHealth / 100);
+            //player.healthBar.setPosition(800 / 2 - 10, 600 + 25 - player.playerHealth);
             if (player.playerHealth <= 70) {
                 //Yellow health
                 player.healthBar.setFillColor(sf::Color::Yellow);
@@ -468,6 +469,7 @@ int main()
             window.draw(player.playerSprite);
 
             //Draw our player's health bar
+            window.draw(player.healthBarBackground);
             window.draw(player.healthBar);
         } else { //ui.isPlaying is now FALSE
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {

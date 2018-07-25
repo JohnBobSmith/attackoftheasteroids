@@ -14,6 +14,7 @@ class Player
 
         //Our health bar rectangle
         sf::RectangleShape healthBar;
+        sf::RectangleShape healthBarBackground;
 
         //Our players constant max health,
         //used to re-set the game
