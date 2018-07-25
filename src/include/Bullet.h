@@ -40,11 +40,11 @@ class Bullet
 
 		    //Cap our rate of fire
 		    //Change this to change the rate of fire
-		    float maxRateOfFire;
+		    sf::Time maxRateOfFire;
 
 		    //Our working rate of fire which 
 		    //we can do stuff to
-		    float rateOfFire;
+		    sf::Time rateOfFire;
 		};
 		
         //Set our bullets up automatically

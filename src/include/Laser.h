@@ -10,13 +10,17 @@ class Laser
 
         //A boolean value to determine
         //when the laser is in use
-        bool isLaserOn = false;
+        bool isLaserOn;
 
         //Damage the laser should do
-        float laserDamage = 0.025;
+        int laserDamage;
 
         //Our laser sprite
         sf::Sprite laserSprite;
+        
+        //Our time, since this is damage over time
+        sf::Time tickTimer;
+        sf::Time tickTimerInitial;
 
         //Grab the width/height
         int getWidth() { return laserTexture.getSize().x; }

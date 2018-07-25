@@ -22,7 +22,7 @@ Enemy::Enemy()
 		enemyVector[i]->isDead = true;
 		enemyVector[i]->isSpawned = false;
 		enemyVector[i]->isCounted = false;
-		enemyVector[i]->enemyVelocity = 5.0f;
+		enemyVector[i]->enemyVelocity = 30.0f;
 		enemyVector[i]->maxEnemyHealth = 40.0f;
 		enemyVector[i]->enemyHealth = enemyVector[i]->maxEnemyHealth;
 	}

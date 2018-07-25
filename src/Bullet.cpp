@@ -16,9 +16,9 @@ Bullet::Bullet()
 		bulletStorage[i]->velocityX = 0;
 		bulletStorage[i]->velocityY = 0;
 		bulletStorage[i]->isActive = false;
-		bulletStorage[i]->bulletVelocity = 75.0f;
-		bulletStorage[i]->bulletDamage = 12;
-		bulletStorage[i]->maxRateOfFire = 0.45;
+		bulletStorage[i]->bulletVelocity = 500.0f;
+		bulletStorage[i]->bulletDamage = 11;
+		bulletStorage[i]->maxRateOfFire = sf::seconds(20);
 		bulletStorage[i]->rateOfFire = bulletStorage[i]->maxRateOfFire;
    	}
 }
@@ -32,9 +32,9 @@ void Bullet::shoot(Mouse &mouse, Audio &audio)
     //Our rate of fire. Subtract 0.01f here always.
     //Do not change this value. Instead, adjust
     //bullet.maxRateOfFire to change fire rate
-    bulletStorage[currentBullet]->rateOfFire -= 0.01f;
+    bulletStorage[currentBullet]->rateOfFire -= sf::seconds(0.1);
 
-    if (bulletStorage[currentBullet]->rateOfFire <= 0.0f) { //The our counter expired, so...
+    if (bulletStorage[currentBullet]->rateOfFire.asSeconds() <= 0) { //The our counter expired, so...
         //Fire our bullets one at a time
         currentBullet += 1;
         //If we run out of bullets, re-set to prevent a crash

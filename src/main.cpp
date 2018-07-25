@@ -16,7 +16,8 @@
 int main()
 {
     //Frame rate limiter
-    const float timeStep = 1/60.0f;
+    //const float timeStep = 1/60.0f;
+    sf::Clock deltaClock;
 
     //Our window and event union
     const int SCREEN_HEIGHT = 600;
@@ -100,6 +101,7 @@ int main()
 	
     /* * * * MAIN LOOP * * * */
     while(window.isOpen()) {
+        sf::Time deltaTime = deltaClock.restart();
         while(window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 //We pressed the titlebar's X button
@@ -198,9 +200,15 @@ int main()
             //If the laser is on, drain the player health
             //Also play the sound
             if (laser.isLaserOn) {
-                player.playerHealth -= laser.laserDamage;
                 audio.laserFire.play();
+                laser.tickTimer -= sf::seconds(0.1);
+                if (laser.tickTimer.asSeconds() <= 0) {
+                    player.playerHealth -= laser.laserDamage;
+                    laser.tickTimer = laser.tickTimerInitial;
+                }
             }
+            
+            std::cout << player.playerHealth << "\n";
 
             //Check the status of our health bar
             //Starts off as green by default, we
@@ -427,8 +435,8 @@ int main()
                 if (!enemy.enemyVector[i]->isDead) { //The enemy is NOT dead...
                     //Apply gravity AKA make our enemies move down and towards player
                     enemy.enemyVector[i]->velocityY = enemy.enemyVector[i]->enemyVelocity;
-                    enemy.enemyVector[i]->positionX += enemy.enemyVector[i]->velocityX * timeStep;
-                    enemy.enemyVector[i]->positionY += enemy.enemyVector[i]->velocityY * timeStep;
+                    enemy.enemyVector[i]->positionX += enemy.enemyVector[i]->velocityX * deltaTime.asSeconds();
+                    enemy.enemyVector[i]->positionY += enemy.enemyVector[i]->velocityY * deltaTime.asSeconds();
                     enemy.enemyVector[i]->asteroidSprite.setPosition(enemy.enemyVector[i]->positionX, enemy.enemyVector[i]->positionY);
                     window.draw(enemy.enemyVector[i]->asteroidSprite);
                 }
@@ -437,8 +445,8 @@ int main()
             //Draw the bullets
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
                 if (bullet.bulletStorage[i]->isActive) { //Live bullet, so move it
-                    bullet.bulletStorage[i]->positionX += bullet.bulletStorage[i]->velocityX * timeStep;
-                    bullet.bulletStorage[i]->positionY += bullet.bulletStorage[i]->velocityY * timeStep;
+                    bullet.bulletStorage[i]->positionX += bullet.bulletStorage[i]->velocityX * deltaTime.asSeconds();
+                    bullet.bulletStorage[i]->positionY += bullet.bulletStorage[i]->velocityY * deltaTime.asSeconds();
                     bullet.bulletStorage[i]->bulletSprite.setPosition(bullet.bulletStorage[i]->positionX, bullet.bulletStorage[i]->positionY);
                     window.draw(bullet.bulletStorage[i]->bulletSprite);
                 }
