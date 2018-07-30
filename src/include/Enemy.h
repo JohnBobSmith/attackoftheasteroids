@@ -20,8 +20,8 @@ class Enemy
 		    float positionX;
 		    float positionY;
 
-		    //Is the enemy dead?
-		    bool isDead;
+		    //Is the enemy alive?
+		    bool isAlive;
 
 		    //Is an individual enemy spawned?
 		    bool isSpawned;

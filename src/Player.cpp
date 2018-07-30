@@ -16,7 +16,7 @@ Player::Player()
     healthBar.setSize(sf::Vector2f(20, 50));
     //Starts with full health
     healthBar.setFillColor(sf::Color::Green);
-    healthBar.setPosition(800 / 2 + 15, 600);
+    healthBar.setPosition(800 / 2 + 18, 600);
     
     //Set the background for our health bar
     healthBarBackground.setSize(sf::Vector2f(40, 80));

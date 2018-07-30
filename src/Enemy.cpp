@@ -19,7 +19,7 @@ Enemy::Enemy()
 		enemyVector[i]->velocityY = 0;
 		enemyVector[i]->positionX = 0;
 		enemyVector[i]->positionY = 0;
-		enemyVector[i]->isDead = true;
+		enemyVector[i]->isAlive = false;
 		enemyVector[i]->isSpawned = false;
 		enemyVector[i]->isCounted = false;
 		enemyVector[i]->enemyVelocity = 30.0f;
@@ -44,7 +44,7 @@ bool Enemy::checkForWin(std::vector<std::shared_ptr<EnemyObj>> tempEnemyVector, 
         //If the enemy is spawned...
         if (tempEnemyVector[i]->isSpawned) {
             //If the enemy is dead and not counted...
-            if (tempEnemyVector[i]->isDead && !tempEnemyVector[i]->isCounted) {
+            if (!tempEnemyVector[i]->isAlive && !tempEnemyVector[i]->isCounted) {
                 //Update the counter
                 numberOfLiveEnemies -= 1;
                 //Count the enemy only once
@@ -167,11 +167,10 @@ void Enemy::spawnEnemyWave(std::vector<std::shared_ptr<EnemyObj>> tempEnemyVecto
 
     //Spawn our enemies
     for (int i = 0; i < localEnemyCount; ++i) {
-        tempEnemyVector[i]->isDead = false;
+        tempEnemyVector[i]->isAlive = true;
         tempEnemyVector[i]->isSpawned = true;
     }
 
     //Position them
     resetEnemy(tempEnemyVector);
 }
-
