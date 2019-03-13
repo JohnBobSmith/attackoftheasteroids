@@ -25,6 +25,11 @@ Enemy::Enemy()
 		enemyVector[i]->enemyVelocity = 30.0f;
 		enemyVector[i]->maxEnemyHealth = 40.0f;
 		enemyVector[i]->enemyHealth = enemyVector[i]->maxEnemyHealth;
+		enemyVector[i]->originOffsetX = enemyVector[i]->asteroidTexture.getSize().x;
+		enemyVector[i]->originOffsetY = enemyVector[i]->asteroidTexture.getSize().y;
+        
+        //Set the origin right away
+        enemyVector[i]->asteroidSprite.setOrigin(enemyVector[i]->originOffsetX / 2, enemyVector[i]->originOffsetY / 2);
 	}
 }
 
@@ -90,6 +95,7 @@ void Enemy::resetEnemy(std::vector<std::shared_ptr<EnemyObj>> tempEnemyVector)
             counter = 0;
         }
         tempEnemyVector[i]->positionX = counter * 90;
+        tempEnemyVector[i]->positionX += 32;
         counter += 1;
     }
 

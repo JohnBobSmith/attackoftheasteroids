@@ -229,6 +229,18 @@ int main()
                 ui.isWin = false;
                 ui.isPlaying = false;
             }
+            
+            /* * * ROTATION CODE. WORKS BUT NEEDS IMPROVED UPON * * */
+            //*
+            //Rotate our enemies
+            for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
+                if (enemy.enemyVector[i]->isAlive) {
+
+                    //Set the rotation
+                    enemy.enemyVector[i]->asteroidSprite.rotate(0.05);
+                }
+            }
+            //*/
 
             //Check for enemy collisions against the player
             for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
@@ -240,7 +252,7 @@ int main()
                     if (collisionbox.checkAABBcollision(player.playerSprite.getPosition().x - player.getWidth() / 2,
                                                         player.playerSprite.getPosition().y - player.getHeight() / 2 + 30,
                                                         player.getWidth(), player.getHeight(),
-                                                        enemy.enemyVector[i]->positionX, enemy.enemyVector[i]->positionY, 64, 64)) {
+                                                        enemy.enemyVector[i]->positionX - 32, enemy.enemyVector[i]->positionY - 32, 64, 64)) {
 
                         //Kill the enemy, damage the player
                         audio.enemyDeath.play();
@@ -256,7 +268,7 @@ int main()
                     //Shield is up and enemy isnt dead
                     if (shield.shieldVector[i]->isShieldUp && enemy.enemyVector[j]->isAlive) {
                         if (collisionbox.checkAABBcollision(shield.shieldVector[i]->positionX, shield.shieldVector[i]->positionY,
-                                                            30, 30, enemy.enemyVector[j]->positionX, enemy.enemyVector[j]->positionY,
+                                                            30, 30, enemy.enemyVector[j]->positionX - 32, enemy.enemyVector[j]->positionY - 32,
                                                             60, 60)) {
 
                             //Take out a shield chunk and damage the enemy,
@@ -282,7 +294,7 @@ int main()
                     if (collisionbox.checkAABBcollision(laser.laserSprite.getPosition().x,
                                                     laser.laserSprite.getPosition().y,
                                                     laser.getWidth(), laser.getHeight(),
-                                                    enemy.enemyVector[i]->positionX, enemy.enemyVector[i]->positionY,
+                                                    enemy.enemyVector[i]->positionX - 32, enemy.enemyVector[i]->positionY - 32,
                                                     60, 60)) {
 
                         //Slowly damage the enemy, for
@@ -305,7 +317,7 @@ int main()
                     //Ensure our bullet is actually capable of damaging our enemies
                     if (bullet.bulletStorage[i]->isActive && enemy.enemyVector[j]->isAlive) {
                         if (collisionbox.checkAABBcollision(bullet.bulletStorage[i]->positionX, bullet.bulletStorage[i]->positionY, 5, 5,
-                                                            enemy.enemyVector[j]->positionX, enemy.enemyVector[j]->positionY,
+                                                            enemy.enemyVector[j]->positionX - 32, enemy.enemyVector[j]->positionY - 32,
                                                             60, 60)) {
                             //Collision detected.
                             bullet.bulletStorage[i]->isActive = false; //No longer rendered

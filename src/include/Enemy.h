@@ -13,6 +13,10 @@ class Enemy
 		    //The enemy sprite and texture
 		    sf::Sprite asteroidSprite;
         	sf::Texture asteroidTexture;
+        	
+        	//When we change the origin, store the offset.
+        	unsigned int originOffsetX;
+        	unsigned int originOffsetY;
 
 		    //The enemies position and velocity
 		    float velocityX;
