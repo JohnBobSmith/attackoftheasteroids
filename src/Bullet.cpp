@@ -18,13 +18,21 @@ Bullet::Bullet()
 		bulletStorage[i]->isActive = false;
 		bulletStorage[i]->bulletVelocity = 500.0f;
 		bulletStorage[i]->bulletDamage = 11;
-		bulletStorage[i]->maxRateOfFire = sf::seconds(20);
+		bulletStorage[i]->maxRateOfFire = sf::seconds(0.15);
 		bulletStorage[i]->rateOfFire = bulletStorage[i]->maxRateOfFire;
    	}
 }
 
-void Bullet::shoot(Mouse &mouse, Audio &audio)
+void Bullet::shoot(Mouse &mouse, Audio &audio, sf::Time &deltaTime) 
 {
+/*
+    //The timer
+    sf::Clock clock;
+    static sf::Time startTime = sf::seconds(10000);
+    startTime -= (sf::seconds(1) * deltaTime.asSeconds());
+    std::cout << startTime.asSeconds() << std::endl;
+*/    
+    
     //Current bullet being shot.
     //Used to shoot exactly one bullet at a time.
     static int currentBullet = 0;
@@ -32,7 +40,7 @@ void Bullet::shoot(Mouse &mouse, Audio &audio)
     //Our rate of fire. Subtract 0.01f here always.
     //Do not change this value. Instead, adjust
     //bullet.maxRateOfFire to change fire rate
-    bulletStorage[currentBullet]->rateOfFire -= sf::seconds(0.1);
+    bulletStorage[currentBullet]->rateOfFire -= (sf::seconds(1) * deltaTime.asSeconds());
 
     if (bulletStorage[currentBullet]->rateOfFire.asSeconds() <= 0) { //The our counter expired, so...
         //Fire our bullets one at a time

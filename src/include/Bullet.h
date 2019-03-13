@@ -51,7 +51,7 @@ class Bullet
         Bullet();
         
         //Shoot a bullet
-        void shoot(Mouse &mouse, Audio &audio);
+        void shoot(Mouse &mouse, Audio &audio, sf::Time &deltaTime);
 
         //Expose the maximum amount of bullets allowed
         int getMaxBullets() { return maxBullets; };

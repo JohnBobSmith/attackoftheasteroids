@@ -122,7 +122,7 @@ int main()
         if (ui.isPlaying) {
             //Mouse down event. Shoot with left mouse
             if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-				bullet.shoot(mouse, audio);
+				bullet.shoot(mouse, audio, deltaTime);
 			}
 
             //Mouse right event. Fire our laser
@@ -448,8 +448,8 @@ int main()
                 if (enemy.enemyVector[i]->isAlive) { //The enemy is NOT dead...
                     //Apply gravity AKA make our enemies move down and towards player
                     enemy.enemyVector[i]->velocityY = enemy.enemyVector[i]->enemyVelocity;
-                    enemy.enemyVector[i]->positionX += enemy.enemyVector[i]->velocityX * deltaTime.asSeconds();
-                    enemy.enemyVector[i]->positionY += enemy.enemyVector[i]->velocityY * deltaTime.asSeconds();
+                    enemy.enemyVector[i]->positionX = enemy.enemyVector[i]->positionX + (enemy.enemyVector[i]->velocityX * deltaTime.asSeconds());
+                    enemy.enemyVector[i]->positionY = enemy.enemyVector[i]->positionY + (enemy.enemyVector[i]->velocityY * deltaTime.asSeconds());
                     enemy.enemyVector[i]->asteroidSprite.setPosition(enemy.enemyVector[i]->positionX, enemy.enemyVector[i]->positionY);
                     window.draw(enemy.enemyVector[i]->asteroidSprite);
                 }
@@ -458,8 +458,8 @@ int main()
             //Draw the bullets
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
                 if (bullet.bulletStorage[i]->isActive) { //Live bullet, so move it
-                    bullet.bulletStorage[i]->positionX += bullet.bulletStorage[i]->velocityX * deltaTime.asSeconds();
-                    bullet.bulletStorage[i]->positionY += bullet.bulletStorage[i]->velocityY * deltaTime.asSeconds();
+                    bullet.bulletStorage[i]->positionX = bullet.bulletStorage[i]->positionX + (bullet.bulletStorage[i]->velocityX * deltaTime.asSeconds());
+                    bullet.bulletStorage[i]->positionY = bullet.bulletStorage[i]->positionY + (bullet.bulletStorage[i]->velocityY * deltaTime.asSeconds());
                     bullet.bulletStorage[i]->bulletSprite.setPosition(bullet.bulletStorage[i]->positionX, bullet.bulletStorage[i]->positionY);
                     window.draw(bullet.bulletStorage[i]->bulletSprite);
                 }
