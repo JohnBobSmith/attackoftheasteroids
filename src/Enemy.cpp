@@ -8,10 +8,10 @@ Enemy::Enemy()
 	isWaveSpawned = false;
 	waveCounter = 1;
 
-	//Initialize all of our enemies	
+	//Initialize all of our enemies
 	for (int i = 0; i < maxEnemies; ++i) {
 		enemyVector.push_back(std::make_shared<EnemyObj>());
-		if (!enemyVector[i]->asteroidTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/easyAsteroid.png")) {
+		if (!enemyVector[i]->asteroidTexture.loadFromFile("textures/easyAsteroid.png")) {
 		    std::cerr << "Error: Missing texture file easyAsteroid.png\n";
 		}
 		enemyVector[i]->asteroidSprite.setTexture(enemyVector[i]->asteroidTexture);
@@ -27,7 +27,7 @@ Enemy::Enemy()
 		enemyVector[i]->enemyHealth = enemyVector[i]->maxEnemyHealth;
 		enemyVector[i]->originOffsetX = enemyVector[i]->asteroidTexture.getSize().x;
 		enemyVector[i]->originOffsetY = enemyVector[i]->asteroidTexture.getSize().y;
-        
+
         //Set the origin right away
         enemyVector[i]->asteroidSprite.setOrigin(enemyVector[i]->originOffsetX / 2, enemyVector[i]->originOffsetY / 2);
 	}

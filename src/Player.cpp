@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-    if(!playerTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/moonbase.png")) {
+    if(!playerTexture.loadFromFile("textures/moonbase.png")) {
         std::cerr << "Error: Missing texture file moonbase.png\n";
     }
     playerSprite.setTexture(playerTexture);
@@ -17,7 +17,7 @@ Player::Player()
     //Starts with full health
     healthBar.setFillColor(sf::Color::Green);
     healthBar.setPosition(800 / 2 + 18, 600);
-    
+
     //Set the background for our health bar
     healthBarBackground.setSize(sf::Vector2f(40, 80));
     healthBarBackground.setFillColor(sf::Color::Black);

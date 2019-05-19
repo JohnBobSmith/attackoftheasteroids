@@ -18,6 +18,7 @@ int main()
     //Frame rate limiter
     //const float timeStep = 1/60.0f;
     sf::Clock deltaClock;
+    sf::Clock currClock;
 
     //Our window and event union
     const int SCREEN_HEIGHT = 600;
@@ -27,7 +28,7 @@ int main()
 
     //Our square font
     sf::Font blockFont;
-    if (!blockFont.loadFromFile(PREFIX "/share/attackoftheasteroids/fonts/ehsmb.ttf")) {
+    if (!blockFont.loadFromFile("fonts/ehsmb.ttf")) {
     	std::cerr << "Warning: Missing font ehsmb.ttf\n";
     }
 
@@ -64,14 +65,14 @@ int main()
     //Our background image
     sf::Sprite background;
     sf::Texture backgroundTexture;
-    if (!backgroundTexture.loadFromFile(PREFIX "/share/attackoftheasteroids/textures/bg.png")) {
+    if (!backgroundTexture.loadFromFile("textures/bg.png")) {
     	std::cerr << "Warning: Missing texture file bg.png\n";
     }
     background.setTexture(backgroundTexture);
 
     //The laser
     Laser laser;
-    
+
     //Our mouse
     Mouse mouse;
 
@@ -91,18 +92,19 @@ int main()
 
     //Our bullet object
     Bullet bullet;
-    
+
     //Our shield object
     Shield shield;
     shield.positionShieldBlocks();
 
 	//Our enemies
 	Enemy enemy;
-	
+
     /* * * * MAIN LOOP * * * */
     while(window.isOpen()) {
         //Keep track of delta time
         sf::Time deltaTime = deltaClock.restart();
+        sf::Time elapsedTime = currClock.getElapsedTime();
         while(window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 //We pressed the titlebar's X button
@@ -188,7 +190,7 @@ int main()
 	                enemy.isWaveSpawned = true;
 	            }
 	        }
-        
+
             //Win checking
             //This is done right away, so that if this
             //returns false, checking for a loss still occurs
@@ -229,7 +231,7 @@ int main()
                 ui.isWin = false;
                 ui.isPlaying = false;
             }
-            
+
             /* * * ROTATION CODE. WORKS BUT NEEDS IMPROVED UPON * * */
             //*
             //Rotate our enemies
@@ -357,6 +359,14 @@ int main()
                     ui.isPlaying = false;
                 }
             }
+
+            //If a shield died, move it off screen for special effect
+            for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
+                if (!shield.shieldVector[i]->isShieldUp) {
+                    shield.shieldVector[i]->positionY += 100.0 * deltaTime.asSeconds();
+                    shield.shieldVector[i]->shieldSprite.setPosition(shield.shieldVector[i]->shieldSprite.getPosition().x, shield.shieldVector[i]->positionY);
+                }
+            }
         }
         //END OF GAME LOGIC, START OF DRAWING STUFF
 
@@ -385,9 +395,9 @@ int main()
             if (collisionbox.checkAABBcollision(ui.startButton.getPosition().x,
                                                 ui.startButton.getPosition().y,
                                                 ui.getWidth(), ui.getHeight(),
-                                                mouse.getMouseX(), mouse.getMouseY(), 
+                                                mouse.getMouseX(), mouse.getMouseY(),
                                                 mouse.getWidth(), mouse.getHeight())) {
-  
+
                 //We press the start button...
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     //Turn everything on...
@@ -417,9 +427,9 @@ int main()
             if (collisionbox.checkAABBcollision(ui.helpButton.getPosition().x,
                                     ui.helpButton.getPosition().y,
                                     ui.getWidth(), ui.getHeight(),
-                                    mouse.getMouseX(), mouse.getMouseY(), 
+                                    mouse.getMouseX(), mouse.getMouseY(),
                                     mouse.getWidth(), mouse.getHeight())) {
-  
+
                 //...turn the page on
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     ui.isHelpDisplayed = true;
@@ -430,9 +440,9 @@ int main()
             if (collisionbox.checkAABBcollision(ui.quitButton.getPosition().x,
                                     ui.quitButton.getPosition().y,
                                     ui.getWidth(), ui.getHeight(),
-                                    mouse.getMouseX(), mouse.getMouseY(), 
+                                    mouse.getMouseX(), mouse.getMouseY(),
                                     mouse.getWidth(), mouse.getHeight())) {
-  
+
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                     //Quit
                     window.close();
@@ -474,6 +484,10 @@ int main()
             for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
                 if (shield.shieldVector[i]->isShieldUp) {
                     window.draw(shield.shieldVector[i]->shieldSprite);
+                } else {
+                    if (shield.shieldVector[i]->shieldSprite.getPosition().y < SCREEN_HEIGHT) {
+                      window.draw(shield.shieldVector[i]->shieldSprite);
+                    }
                 }
             }
 
@@ -488,7 +502,7 @@ int main()
             for (int i = 0; i < bullet.getMaxBullets(); ++i) {
                 bullet.bulletStorage[i]->isActive = false;
             }
-			
+
             //Ensure we are not in the main menu
             if (!ui.isMainMenu) {
                 //If we won..
@@ -523,6 +537,13 @@ int main()
                         for (int i = 0; i < enemy.getLocalEnemyCount(); ++i) {
                             enemy.enemyVector[i]->isAlive = true;
                        }
+
+                        //Cleanup dead shield blocks by moving everything off screen
+                        for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
+                            if (!shield.shieldVector[i]->isShieldUp) {
+                                shield.shieldVector[i]->shieldSprite.setPosition(-9000, -9000);
+                            }
+                        }
 
                         //Start playing again
                         ui.isPlaying = true;

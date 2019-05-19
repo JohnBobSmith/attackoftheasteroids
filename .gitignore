@@ -41,3 +41,6 @@ src/obj/
 # Our executable
 aota
 attackoftheasteroids
+
+# DLL Files
+*.dll

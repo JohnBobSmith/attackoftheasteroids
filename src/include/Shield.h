@@ -23,20 +23,20 @@ class Shield
 		    //Is an individual shield block running?
 		    bool isShieldUp;
     	};
-    	
+
         //Automaticaly setup our shield blocks
         Shield();
-       
-       	//Calculate a quadradic equation used for 
-       	//making our shields curve uniformly 
+
+       	//Calculate a quadradic equation used for
+       	//making our shields curve uniformly
         sf::Vector2f calculateQuadratic(float n);
-        
+
         //Position our shield blocks
         void positionShieldBlocks();
 
         //Return the max amount of shield segments
         int getMaxShieldBlocks() { return maxShieldBlocks; }
-        
+
         //Our shield vector storage
         std::vector<std::shared_ptr<ShieldObj>> shieldVector;
 

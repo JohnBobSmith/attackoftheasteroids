@@ -1,4 +1,8 @@
 #include "include/Mouse.h"
+#ifdef M_PI
+#undef M_PI
+#endif // M_PI
+#define M_PI 3.14159265
 
 float Mouse::calculateMouseAngle(float mouseX, float mouseY, float positionX, float positionY)
 {
