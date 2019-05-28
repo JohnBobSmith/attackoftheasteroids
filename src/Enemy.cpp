@@ -17,8 +17,8 @@ Enemy::Enemy()
 		enemyVector[i]->asteroidSprite.setTexture(enemyVector[i]->asteroidTexture);
 		enemyVector[i]->velocityX = 0;
 		enemyVector[i]->velocityY = 0;
-		enemyVector[i]->positionX = 0;
-		enemyVector[i]->positionY = 0;
+		enemyVector[i]->positionX = -9999;
+		enemyVector[i]->positionY = -9999;
 		enemyVector[i]->isAlive = false;
 		enemyVector[i]->isSpawned = false;
 		enemyVector[i]->isCounted = false;
@@ -27,6 +27,10 @@ Enemy::Enemy()
 		enemyVector[i]->enemyHealth = enemyVector[i]->maxEnemyHealth;
 		enemyVector[i]->originOffsetX = enemyVector[i]->asteroidTexture.getSize().x;
 		enemyVector[i]->originOffsetY = enemyVector[i]->asteroidTexture.getSize().y;
+		enemyVector[i]->asteroidSprite.setPosition(enemyVector[i]->positionX, enemyVector[i]->positionY);
+		//Fade out time. Multiply by deltaTime in main() to equal the number of seconds.
+		enemyVector[i]->fadeOutTime = sf::seconds(3.00);
+		enemyVector[i]->isRendered = true;
 
         //Set the origin right away
         enemyVector[i]->asteroidSprite.setOrigin(enemyVector[i]->originOffsetX / 2, enemyVector[i]->originOffsetY / 2);

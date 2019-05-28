@@ -204,9 +204,9 @@ int main()
             //Also play the sound
             if (laser.isLaserOn) {
                 audio.laserFire.play();
-                laser.tickTimer -= sf::seconds(0.1);
+                laser.tickTimer -= sf::seconds(0.25) * deltaTime.asSeconds();
                 if (laser.tickTimer.asSeconds() <= 0) {
-                    player.playerHealth -= laser.laserDamage;
+                    player.playerHealth -= laser.laserDamageToPlayer;
                     laser.tickTimer = laser.tickTimerInitial;
                 }
             }
@@ -301,7 +301,7 @@ int main()
 
                         //Slowly damage the enemy, for
                         //a more realistic laser burn effect
-                        enemy.enemyVector[i]->enemyHealth -= 0.1;
+                        enemy.enemyVector[i]->enemyHealth -= laser.laserDamage;
                         if (enemy.enemyVector[i]->enemyHealth <= 0) {
                         	enemy.enemyVector[i]->isAlive = false;
                         }
@@ -365,6 +365,30 @@ int main()
                 if (!shield.shieldVector[i]->isShieldUp) {
                     shield.shieldVector[i]->positionY += 100.0 * deltaTime.asSeconds();
                     shield.shieldVector[i]->shieldSprite.setPosition(shield.shieldVector[i]->shieldSprite.getPosition().x, shield.shieldVector[i]->positionY);
+                }
+            }
+
+            //Fade enemies out
+            static sf::Time fadeTime = sf::seconds(3.0);
+            for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
+                if (!enemy.enemyVector[i]->isAlive) {
+                    fadeTime -= sf::seconds(1.0) * deltaTime.asSeconds();
+                    if (fadeTime.asSeconds() <= 0) {
+                        enemy.enemyVector[i]->isRendered = false;
+                        fadeTime = sf::seconds(3.0);
+                    }
+                }
+            }
+
+            //Attempt to change the opacity over time...
+            static sf::Time opacity = sf::seconds(255);
+            for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
+                if (!enemy.enemyVector[i]->isAlive) {
+                    opacity -= sf::seconds(5) * deltaTime.asSeconds();
+                    enemy.enemyVector[i]->asteroidSprite.setColor(sf::Color(200, 100, 50, opacity.asSeconds()));
+                    if (opacity.asSeconds() <= 0) {
+                        opacity = sf::seconds(255);
+                    }
                 }
             }
         }
@@ -462,6 +486,10 @@ int main()
                     enemy.enemyVector[i]->positionY = enemy.enemyVector[i]->positionY + (enemy.enemyVector[i]->velocityY * deltaTime.asSeconds());
                     enemy.enemyVector[i]->asteroidSprite.setPosition(enemy.enemyVector[i]->positionX, enemy.enemyVector[i]->positionY);
                     window.draw(enemy.enemyVector[i]->asteroidSprite);
+                } else {
+                    if (enemy.enemyVector[i]->isRendered) {
+                        window.draw(enemy.enemyVector[i]->asteroidSprite);
+                    }
                 }
             }
 
@@ -519,10 +547,56 @@ int main()
                     audio.mainMenuTheme.stop();
                 }
 
-                //Space bar to re-start event
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-                    //Do the things that every win would require
-                    if (ui.isWin) {
+
+                //Do the things that every win would require
+                if (ui.isWin) {
+                    //Space bar to re-start event
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                        //Spawn more enemies
+                        for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
+                            enemy.isWaveSpawned = false;
+                        }
+
+                        //Reset the enemy parameters
+                        for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
+                            enemy.enemyVector[i]->enemyHealth = 40;
+                        }
+
+                        //only reset enemies that need re-setting
+                        for (int i = 0; i < enemy.getLocalEnemyCount(); ++i) {
+                            enemy.enemyVector[i]->isAlive = true;
+                       }
+
+                        //Cleanup dead shield blocks by moving everything off screen
+                        for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
+                            if (!shield.shieldVector[i]->isShieldUp) {
+                                shield.shieldVector[i]->shieldSprite.setPosition(-9000, -9000);
+                            }
+                        }
+
+                        //Reset multiple enemy variables
+                        for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
+                            enemy.enemyVector[i]->isRendered = true;
+                            enemy.enemyVector[i]->asteroidSprite.setColor(sf::Color(255, 255, 255, 255));
+                        }
+
+                        //Start playing again
+                        ui.isPlaying = true;
+
+                        //Always re-set the win variable
+                        ui.isWin = false;
+                    }
+                }
+               if (!ui.isWin) {
+                    //We didn't win, so we must have lost.
+                    //Offer to quit, otherwise spacebar to completely
+                    //reset and play again.
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+                        window.close();
+                    }
+
+                    //Start a new game
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
                         //Spawn more enemies
                         for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
                         	enemy.isWaveSpawned = false;
@@ -545,14 +619,35 @@ int main()
                             }
                         }
 
-                        //Start playing again
-                        ui.isPlaying = true;
+                        //Reset multiple enemy variables
+                        for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
+                            enemy.enemyVector[i]->isRendered = true;
+                            enemy.enemyVector[i]->asteroidSprite.setColor(sf::Color(255, 255, 255, 255));
+                        }
 
-                        //Always re-set the win variable
+                        //Turn everything on...
+                        for (int i = 0; i < shield.getMaxShieldBlocks(); ++i) {
+                            shield.shieldVector[i]->isShieldUp = true;
+                        }
+
+                        //Reset enemy health
+                        for (int i = 0; i < enemy.getMaxEnemies(); ++i){
+                            enemy.enemyVector[i]->enemyHealth = 40;
+                        }
+
+                        //Reset the player's health bar
+                        player.healthBar.setFillColor(sf::Color::Green);
+
+                        //Reset the player health
+                        player.playerHealth = player.playerMaxHealth;
+
+                        //Reset the wave counter
+                        enemy.waveCounter = 1;
+
+                        //Start playing
                         ui.isWin = false;
-                    } else { //We didnt win, must have lost
-                        //Pressing spacebar should cause an exit
-                        window.close();
+                        ui.isPlaying = true;
+                        ui.isMainMenu = false;
                     }
                 }
             }

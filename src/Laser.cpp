@@ -4,8 +4,9 @@
 Laser::Laser()
 {
     isLaserOn = false;
-    laserDamage = 2;
-    tickTimerInitial = sf::seconds(50);
+    laserDamage = 0.025;
+    laserDamageToPlayer = 2;
+    tickTimerInitial = sf::seconds(0.1);
     tickTimer = tickTimerInitial;
     if (!laserTexture.loadFromFile("textures/laser.png")) {
         std::cerr << "Error: Missing texture file laser.png\n";

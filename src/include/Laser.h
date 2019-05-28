@@ -13,11 +13,14 @@ class Laser
         bool isLaserOn;
 
         //Damage the laser should do
-        int laserDamage;
+        float laserDamage;
+
+        //damage the laser causes to the player
+        int laserDamageToPlayer;
 
         //Our laser sprite
         sf::Sprite laserSprite;
-        
+
         //Our time, since this is damage over time
         sf::Time tickTimer;
         sf::Time tickTimerInitial;
