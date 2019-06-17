@@ -39,9 +39,13 @@ class UI
         //otherwise known as a win
         bool isWin = false;
 
+        //When we outright lose the game.
+        bool isLoss = false;
+
         //Are we in the main menu?
         //If so, display the various buttons.
         bool isMainMenu = true;
+
         //Dont show our help unless in the correct
         //menu to do so
         bool isHelpDisplayed = false;

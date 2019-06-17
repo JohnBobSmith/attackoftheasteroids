@@ -31,6 +31,7 @@ Enemy::Enemy()
 		//Fade out time. Multiply by deltaTime in main() to equal the number of seconds.
 		enemyVector[i]->fadeOutTime = sf::seconds(3.00);
 		enemyVector[i]->isRendered = true;
+		enemyVector[i]->opacity = sf::seconds(255);
 
         //Set the origin right away
         enemyVector[i]->asteroidSprite.setOrigin(enemyVector[i]->originOffsetX / 2, enemyVector[i]->originOffsetY / 2);

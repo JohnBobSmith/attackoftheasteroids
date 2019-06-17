@@ -48,6 +48,9 @@ class Enemy
 
 		    //The enemies modify-able health
 		    float enemyHealth;
+
+		    //The opacity of a dead enemy
+		    sf::Time opacity;
     	};
 
         //Setup our enemies automatically

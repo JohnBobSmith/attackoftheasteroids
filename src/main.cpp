@@ -144,6 +144,16 @@ int main()
             audio.mainMenuTheme.setVolume(75);
         }
 
+        //Move the background
+        /*
+        sf::Time moveSpeed = sf::Time(sf::seconds(5));
+        background.move(sin(((-moveSpeed.asSeconds() * deltaTime.asSeconds()) * currClock.getElapsedTime().asSeconds())), 0);
+        if (background.getPosition().x <= -2200) {
+            background.setPosition(0, 0);
+        }
+        std::cout << background.getPosition().x << std::endl;
+        //*/
+
         //Running our actual game
         if (ui.isPlaying) {
             //Enemy wave spawning logic
@@ -357,6 +367,7 @@ int main()
                 if (enemy.enemyVector[i]->positionY > SCREEN_HEIGHT) {
                     ui.isWin = false;
                     ui.isPlaying = false;
+                    ui.isLoss = true;
                 }
             }
 
@@ -368,27 +379,20 @@ int main()
                 }
             }
 
-            //Fade enemies out
-            static sf::Time fadeTime = sf::seconds(3.0);
+            //Change the opacity of a dead asteroid sprite over time to fade out
             for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
                 if (!enemy.enemyVector[i]->isAlive) {
-                    fadeTime -= sf::seconds(1.0) * deltaTime.asSeconds();
-                    if (fadeTime.asSeconds() <= 0) {
-                        enemy.enemyVector[i]->isRendered = false;
-                        fadeTime = sf::seconds(3.0);
-                    }
+                    enemy.enemyVector[i]->opacity -= (sf::seconds(500) * deltaTime.asSeconds());
+                    //Use the opacity variable to also fade out our other colors.
+                    sf::Time colorMod = enemy.enemyVector[i]->opacity;
+                    enemy.enemyVector[i]->asteroidSprite.setColor(sf::Color(colorMod.asSeconds(), colorMod.asSeconds(),
+                                                                            colorMod.asSeconds(), colorMod.asSeconds()));
                 }
-            }
-
-            //Attempt to change the opacity over time...
-            static sf::Time opacity = sf::seconds(255);
-            for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
-                if (!enemy.enemyVector[i]->isAlive) {
-                    opacity -= sf::seconds(5) * deltaTime.asSeconds();
-                    enemy.enemyVector[i]->asteroidSprite.setColor(sf::Color(200, 100, 50, opacity.asSeconds()));
-                    if (opacity.asSeconds() <= 0) {
-                        opacity = sf::seconds(255);
-                    }
+                if (enemy.enemyVector[i]->asteroidSprite.getColor().a <= 0) {
+                    enemy.enemyVector[i]->isRendered = false;
+                }
+                if (enemy.enemyVector[i]->opacity.asSeconds() <= 0) {
+                    enemy.enemyVector[i]->opacity = sf::seconds(255);
                 }
             }
         }
@@ -578,6 +582,7 @@ int main()
                         for (int i = 0; i < enemy.getMaxEnemies(); ++i) {
                             enemy.enemyVector[i]->isRendered = true;
                             enemy.enemyVector[i]->asteroidSprite.setColor(sf::Color(255, 255, 255, 255));
+                            enemy.enemyVector[i]->opacity = sf::seconds(255);
                         }
 
                         //Start playing again
@@ -587,7 +592,7 @@ int main()
                         ui.isWin = false;
                     }
                 }
-               if (!ui.isWin) {
+               if (ui.isLoss) {
                     //We didn't win, so we must have lost.
                     //Offer to quit, otherwise spacebar to completely
                     //reset and play again.
@@ -646,8 +651,9 @@ int main()
 
                         //Start playing
                         ui.isWin = false;
-                        ui.isPlaying = true;
-                        ui.isMainMenu = false;
+                        ui.isPlaying = false;
+                        ui.isMainMenu = true;
+                        ui.isLoss = false;
                     }
                 }
             }
